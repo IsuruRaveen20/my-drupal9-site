@@ -1,0 +1,26 @@
+entity.students.settings:
+  title: 'Settings'
+  route_name: entity.students.settings
+  base_route: entity.students.settings
+
+entity.students.view:
+  title: 'View'
+  route_name: entity.students.canonical
+  base_route: entity.students.canonical
+
+entity.students.edit_form:
+  title: 'Edit'
+  route_name: entity.students.edit_form
+  base_route: entity.students.canonical
+
+entity.students.delete_form:
+  title: 'Delete'
+  route_name: entity.students.delete_form
+  base_route: entity.students.canonical
+  weight: 10
+  
+entity.students.collection:
+  title: 'Studentss'
+  route_name: entity.students.collection
+  base_route: system.admin_content
+  weight: 10

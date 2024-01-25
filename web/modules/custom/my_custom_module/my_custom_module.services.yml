@@ -1,0 +1,6 @@
+services:
+  my_custom_module.custom_service:
+    class: Drupal\my_custom_module\Services\CustomService
+    arguments:
+      - '@http_client'
+

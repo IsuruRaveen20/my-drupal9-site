@@ -1,0 +1,13 @@
+#define the menu links for this moudle
+
+entity.students.settings:
+  title: 'Students'
+  description: 'Configure a Students entity type.'
+  route_name:  entity.students.settings
+  parent: system.admin_structure
+
+entity.students.collection:
+  title: 'Studentss'
+  description: 'List of studentss.'
+  route_name: entity.students.collection
+  parent: system.admin_content

@@ -1,0 +1,7 @@
+custom_module.content:
+  path: '/custom-content'
+  defaults:
+    _controller: '\Drupal\my_custom_module\Controller\MyCustomController::content'
+    _title: 'Custom Content'
+  requirements:
+    _permission: 'access content'

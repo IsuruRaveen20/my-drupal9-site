@@ -1,0 +1,92 @@
+<?php
+
+/**
+ * @file
+ * Provides a students entity type.
+ */
+
+use Drupal\Core\Render\Element;
+use Drupal\student_entity\Entity\Students;
+use Drupal\user\UserInterface;
+
+/**
+ * Implements hook_theme().
+ */
+function student_entity_theme() {
+  return [
+    'students' => [
+      'render element' => 'elements',
+    ],
+  ];
+}
+
+/**
+ * Prepares variables for students templates.
+ *
+ * Default template: students.html.twig.
+ *
+ * @param array $variables
+ *   An associative array containing:
+ *   - elements: An associative array containing the students information and any
+ *     fields attached to the entity.
+ *   - attributes: HTML attributes for the containing element.
+ */
+function template_preprocess_students(array &$variables) {
+  $variables['view_mode'] = $variables['elements']['#view_mode'];
+  foreach (Element::children($variables['elements']) as $key) {
+    $variables['content'][$key] = $variables['elements'][$key];
+  }
+}
+
+/**
+ * Implements hook_user_cancel().
+ */
+function student_entity_user_cancel($edit, UserInterface $account, $method) {
+  switch ($method) {
+    case 'user_cancel_block_unpublish':
+      // Unpublish studentss.
+      $storage = \Drupal::entityTypeManager()->getStorage('students');
+      $students_ids = $storage->getQuery()
+        ->condition('uid', $account->id())
+        ->condition('status', 1)
+        ->execute();
+      foreach ($storage->loadMultiple($students_ids) as $students) {
+        $students->set('status', FALSE);
+        $students->save();
+      }
+      break;
+
+    case 'user_cancel_reassign':
+      // Anonymize studentss.
+      $storage = \Drupal::entityTypeManager()->getStorage('students');
+      $students_ids = $storage->getQuery()
+        ->condition('uid', $account->id())
+        ->execute();
+      foreach ($storage->loadMultiple($students_ids) as $students) {
+        $students->setOwnerId(0);
+        $students->save();
+      }
+      break;
+  }
+}
+
+/**
+ * Implements hook_ENTITY_TYPE_predelete() for user entities.
+ */
+function student_entity_user_predelete(UserInterface $account) {
+  // Delete studentss.
+  $storage = \Drupal::entityTypeManager()->getStorage('students');
+  $students_ids = $storage->getQuery()
+    ->condition('uid', $account->id())
+    ->execute();
+  $studentss = $storage->loadMultiple($students_ids);
+  $storage->delete($studentss);
+  // Delete old revisions.
+  $students_ids = $storage->getQuery()
+    ->allRevisions()
+    ->condition('uid', $account->id())
+    ->execute();
+  foreach (array_keys($students_ids) as $revision_id) {
+    $storage->deleteRevision($revision_id);
+  }
+}

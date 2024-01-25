@@ -1,0 +1,24 @@
+entity.students.settings:
+  path: 'admin/structure/students'
+  defaults:
+    _form: '\Drupal\student_entity\Form\StudentsSettingsForm'
+    _title: 'Students Settings'
+  requirements:
+    _permission: 'administer students'
+
+entity.students.add:
+  path: '/entity_students/add'
+  defaults:
+    _entity_form: 'student_entity.add'
+    _title: 'Add Student'
+  requirements:
+    _permission: 'administer students'
+    _custom_access_check: '\Drupal\student_entity\StudentsAddAccessCheck::access'
+
+entity.students.collection:
+  path: '/admin/structure/students-list'
+  defaults:
+    _controller: '\Drupal\student_entity\Controller\StudentsController::content'
+    _title: 'Students'
+  requirements:
+    _permission: 'administer students'

@@ -1,0 +1,8 @@
+custom_form.example:
+  path: '/custom/example'
+  defaults:
+    _title: 'Example'
+    _controller: '\Drupal\custom_form\Controller\SimpleForm::buildForm'
+    _form: '\Drupal\custom_form\Form\ExampleForm'
+  requirements:   
+    _permission: 'access content'

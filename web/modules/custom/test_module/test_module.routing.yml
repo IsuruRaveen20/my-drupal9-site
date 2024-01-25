@@ -1,0 +1,7 @@
+custom_module.custom_route:
+  path: '/customform'
+  defaults:
+    _controller: '\Drupal\test_module\Controller\CustomController::customRoute'
+    _title: 'Custom Form'
+  requirements:
+

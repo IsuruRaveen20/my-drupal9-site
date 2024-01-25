@@ -1,0 +1,11 @@
+administer students:
+  title: 'Administer students settings'
+  restrict access: true
+delete students:
+  title: Delete students
+create students:
+  title: Create students
+view students:
+  title: View students
+edit students:
+  title: Edit students
